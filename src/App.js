@@ -1,24 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Header from './components/Header';
+import Search from './components/Search';
+import data from './data'
+import CharacterGrid from './components/CharacterGrid';
 
-function App() {
+const App = () => {
+  const [items, setItems] = useState([])
+  const [query, setQuery] = useState('')
+
+  useEffect(() => {
+    const filter = query.toLowerCase()
+    const characters = data
+
+    const filteredCharacters = characters.filter((character) => {
+      const name = character.nickname.toLowerCase()
+      return name.startsWith(filter)
+    })
+
+    setItems(filteredCharacters)
+  }, [query])
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Search getQuery={(q) => setQuery(q)}/>
+      <CharacterGrid items={items}/>
     </div>
   );
 }
