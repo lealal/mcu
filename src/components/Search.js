@@ -10,7 +10,7 @@ const Search = ({ getQuery }) => {
 
     return(
         <form>
-            <input 
+            <input className="search-box"
                 type="text"
                 placeholder="Search characters"
                 value={text}
